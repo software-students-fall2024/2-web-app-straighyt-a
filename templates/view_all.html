@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Check All - To-Do List App</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+    </head>
+
+    <body>
+        <div class="view all">
+            <header>
+                <a href="{{ url_for('main') }}">Home</a>
+            </header>
+
+            <h2>Check All Tasks</h2>
+            <form method="POST" action="{{ url_for('filter_todos') }}">
+                <label for="filter">Filter:</label>
+                <select id="filter" name="filter">
+                    <option value="to_do">To-Do</option>
+                    <option value="in_progress">In Progress</option>
+                    <option value="done">Done</option>
+                    <option value="all">All</option>
+                </select>
+                <input type="submit" value="Apply Filter" />
+            </form>
+
+            <ul>
+                {% for todo in todos %}
+                    <li>
+                        <a href="{{ url_for('display_todo', todo_id=todo.id) }}">
+                            {{ todo.list_title }}
+                        </a>
+                    </li>
+                {% else %}
+                    <li>No to-do items found</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Edit Task - To-Do List App</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+    </head>
+
+    <body>
+        <div class="edit">
+            <header>
+                <a href="{{ url_for('main') }}">Home</a>
+            </header>
+
+            <h2>Edit Task</h2>
+            <form method="POST" action="{{ url_for('edit_todo', todo_id=todo.id) }}">
+                <!--preshow existing value -->
+                <input type="text" id="list_title" name="list_title" value="{{ todo.list_title }}" required />
+                <br />
+                <input type="datetime-local" id="time" name="time" value="{{ todo.time | datetimeformat }}" />
+                <br />
+                <textarea id="todo_content" name="todo_content" required>{{ todo.todo_content }}</textarea>
+                <br />
+
+                <label for="status">Status:</label>
+                <select id="status" name="status" required>
+                <option value="to_do" {% if todo.status == 'to_do' %}selected{% endif %}>To-Do</option>
+                <option value="in_progress" {% if todo.status == 'in_progress' %}selected{% endif %}>In Progress</option>
+                <option value="done" {% if todo.status == 'done' %}selected{% endif %}>Done</option>
+                </select>
+                <br />
+
+                <script>
+                    function redirectToMain() {
+                        window.location.href = "{{ url_for('main') }}";
+                    }
+                </script>
+
+                <input type="submit" value="Save Changes" />
+                <input type="button" value="Cancel" onclick="redirectToMain()" />
+
+            </form>
+        </div>
+    </body>
+</html>

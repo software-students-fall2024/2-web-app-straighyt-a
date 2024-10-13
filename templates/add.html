@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Add New - To-Do List App</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+    </head>
+
+    <body>
+        <div class="add">
+            <header>
+                <a href="{{ url_for('main') }}">Home</a>
+            </header>
+
+            <h2>Create a New To-Do List</h2>
+            <form method="POST" action="{{ url_for('save_todo') }}">
+                <input type="text" id="list_title" name="list_title" placeholder="List Title" required />
+                <br />
+                <input type="datetime-local" id="time" name="time" />
+                <br />
+                <textarea id="todo_content" name="todo_content" placeholder="Content" required></textarea>
+                <br />
+
+                <label for="status">Status:</label>
+                <select id="status" name="status" required>
+                    <option value="to_do">To-Do</option>
+                    <option value="in_progress">In Progress</option>
+                    <option value="done">Done</option>
+                </select>
+                <br />
+
+                <script>
+                    function redirectToMain() {
+                        window.location.href = "{{ url_for('main') }}";
+                    }
+                </script>
+                
+                <input type="submit" value="Save" />
+                <input type="button" value="Cancel" onclick="redirectToMain()" />
+
+            </form>
+        </div>
+    </body>
+</html>

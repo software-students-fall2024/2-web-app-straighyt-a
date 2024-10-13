@@ -8,7 +8,10 @@ See instructions. Delete this line and place the Product Vision Statement here.
 
 ## User stories
 
-See instructions. Delete this line and place a link to the user stories here.
+- As a student, I want to be able to check my created to-do list so I can review my tasks easily. 
+- As a student, I want to be able to add a new to-do list, with a title, time, and content so I can manage my deadlines and identify each task easily.
+- As a user, I want to search for a specific task by their title, so I can easily find the task I am looking for, following with edition or deletion.
+
 
 ## Steps necessary to run the software
 

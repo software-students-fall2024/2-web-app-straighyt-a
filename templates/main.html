@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Main - To-Do List App</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+    </head>
+
+    <body>
+        <div class="container">
+            <header>
+                <h1>To-Do List App</h1>
+            </header>
+            <nav>
+                <a href="{{ url_for('search') }}">Search</a>
+                <a href="{{ url_for('view_all') }}">Check All Tasks</a>
+                <a href="{{ url_for('add_new') }}">Add New Task</a>
+            </nav>
+        </div>
+    </body>
+</html>
