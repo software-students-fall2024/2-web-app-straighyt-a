@@ -1,0 +1,199 @@
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #F2DFD7;
+    color: #333333;
+}
+
+.container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #FEF9FF;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(115, 108, 237, 0.1);
+}
+
+/* Header Styles */
+header {
+    margin-bottom: 30px;
+}
+
+header a {
+    color: #9F9FED; 
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 18px;
+    transition: color 0.3s ease;
+}
+
+header a:hover {
+    color: #736CED;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+nav a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #a682ff;
+    color: #FEF9FF; 
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    font-weight: 500;
+    text-align: center;
+    min-width: 120px; 
+}
+
+nav a:hover {
+    background-color: #736CED;
+    transform: translateY(-2px); 
+}
+
+h1, h2 {
+    color: #736CED;
+    margin-bottom: 20px;
+}
+
+/* Form Styles */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="datetime-local"],
+textarea,
+select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #D4C1EC; 
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+    background-color: #FEF9FF;  
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="datetime-local"]:focus,
+textarea:focus,
+select:focus {
+    border-color: #9F9FED;  
+    outline: none;
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* Button Styles */
+input[type="submit"],
+input[type="button"],
+button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    color: #FEF9FF;  
+}
+
+input[type="submit"],
+button[type="submit"] {
+    background-color: #736CED;
+}
+
+input[type="submit"]:hover,
+button[type="submit"]:hover {
+    background-color: #858ae3; 
+}
+
+input[type="button"],
+button[type="button"] {
+    background-color: #9F9FED;  
+    color: #333333;
+}
+
+input[type="button"]:hover,
+button[type="button"]:hover {
+    background-color: #9F9FED;  
+    color: #FEF9FF;
+}
+
+/* Task List Styles */
+.task-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.task-item {
+    background-color: #FEF9FF;
+    border: 1px solid #D4C1EC; 
+    border-radius: 4px;
+    padding: 15px;
+    margin-bottom: 15px;
+    transition: box-shadow 0.3s ease;
+}
+
+.task-item:hover {
+    box-shadow: 0 2px 4px rgba(115, 108, 237, 0.1);
+}
+
+.task-title {
+    font-weight: bold;
+    color: #736CED; 
+    margin-bottom: 5px;
+}
+
+.task-time {
+    font-size: 14px;
+    color: #9F9FED;  
+    margin-bottom: 10px;
+}
+
+.task-status {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.status-todo {
+    background-color: #F2DFD7;  
+    color: #736CED;  
+}
+
+.status-in-progress {
+    background-color: #D4C1EC;  
+    color: #FEF9FF;  
+}
+
+.status-done {
+    background-color: #736CED;  
+    color: #FEF9FF;  
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+        margin: 20px auto;
+        padding: 20px;
+    }
+}
