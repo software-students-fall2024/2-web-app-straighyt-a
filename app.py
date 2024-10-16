@@ -25,9 +25,13 @@ def login():
         password = request.form['password']
         user = db.users.find_one({'email': email, 'password': password})
         if user:
+            # Successful login
+            flash('Login successful!', 'success')
             return redirect(url_for('main'))
         else:
-            return render_template('login.html', error="Invalid email or password")
+            # Invalid login attempt
+            flash('Invalid email or password', 'danger')
+            return redirect(url_for('login'))
     return render_template('login.html')
 
 
@@ -76,12 +80,15 @@ def edit_todo(todo_id):
         todo_content = request.form['todo_content']
         status = request.form['status']
 
-        todos_collection.update_one({'_id': ObjectId(todo_id)}, {'$set': {
-            'list_title': list_title,
-            'time': time,
-            'todo_content': todo_content,
-            'status': status
-        }})
+        todos_collection.update_one(
+            {'_id': ObjectId(todo_id)},
+            {'$set': {
+                'list_title': list_title,
+                'time': time,
+                'todo_content': todo_content,
+                'status': status
+            }}
+        )
         flash('Task updated successfully!')
         return redirect(url_for('main'))
 
@@ -116,6 +123,18 @@ def view_all():
         todos = todos_collection.find({'status': filter_status})
 
     return render_template('view_all.html', todos=todos)
+
+#9. Display To dos 
+@app.route('/task/<todo_id>')
+def display_todo(todo_id):
+    # Make sure you use ObjectId to query based on the MongoDB _id field
+    todo = todos_collection.find_one({'_id': ObjectId(todo_id)})
+    if todo:
+        return render_template('display.html', todo=todo)
+    else:
+        flash('Task not found.', 'danger')
+        return redirect(url_for('view_all'))
+
 
 
 if __name__ == '__main__':

@@ -14,7 +14,8 @@
             </header>
 
             <h2>Check All Tasks</h2>
-            <form method="POST" action="{{ url_for('filter_todos') }}">
+            <!-- Updated the form action to point to 'view_all' -->
+            <form method="POST" action="{{ url_for('view_all') }}">
                 <label for="filter">Filter:</label>
                 <select id="filter" name="filter">
                     <option value="to_do">To-Do</option>
@@ -28,7 +29,7 @@
             <ul>
                 {% for todo in todos %}
                     <li>
-                        <a href="{{ url_for('display_todo', todo_id=todo.id) }}">
+                        <a href="{{ url_for('display_todo', todo_id=todo._id) }}">
                             {{ todo.list_title }}
                         </a>
                     </li>

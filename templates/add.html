@@ -14,10 +14,11 @@
             </header>
 
             <h2>Create a New To-Do List</h2>
-            <form method="POST" action="{{ url_for('save_todo') }}">
+            <!-- Updated action attribute to point to 'add_new' instead of 'save_todo' -->
+            <form method="POST" action="{{ url_for('add_new') }}">
                 <input type="text" id="list_title" name="list_title" placeholder="List Title" required />
                 <br />
-                <input type="datetime-local" id="time" name="time" />
+                <input type="datetime-local" id="time" name="time" required />
                 <br />
                 <textarea id="todo_content" name="todo_content" placeholder="Content" required></textarea>
                 <br />

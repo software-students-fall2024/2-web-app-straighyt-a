@@ -1,41 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Search - To-Do List App</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
-    </head>
+<!-- search.html -->
+<form method="GET" action="{{ url_for('search') }}">
+    <input type="text" id="search_keyword" name="search_keyword" placeholder="Searching for..." />
+    <input type="submit" value="Search" />
+</form>
 
-    <body>
-        <div class="search">
-            <header>
-                <a href="{{ url_for('main') }}">Home</a>
-            </header>
-            <h2>Search for a Task</h2>
-
-            <form method="GET" action="{{ url_for('search_results') }}">
-                <input type="text" id="search_keyword" name="search_keyword" placeholder="Searching for..." />
-                <input type="submit" value="Search" />
-            </form>
-
-            {% if search_results %}
-                <h3>Search Results:</h3>
-                <ul>
-                    {% for todo in search_results %}
-                        <li>
-                            <a href="{{ url_for('display_todo', todo_id=todo.id) }}">
-                                {{ todo.list_title }}
-                            </a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                {% if search_keyword %}
-                    <p>No tasks found for "{{ search_keyword }}"</p>
-                {% endif %}
-            {% endif %}
-
-        </div>
-    </body>
-</html>
+{% if search_results %}
+    <h3>Search Results for "{{ search_keyword }}":</h3>
+    <ul>
+        {% for todo in search_results %}
+            <li>
+                <a href="{{ url_for('display_todo', todo_id=todo._id) }}">
+                    {{ todo.list_title }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    {% if search_keyword %}
+        <p>No tasks found for "{{ search_keyword }}"</p>
+    {% endif %}
+{% endif %}
