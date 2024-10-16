@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login - To-Do List App</title>
+    <title>Sign Up - To-Do List App</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
 </head>
 <body>
-    <div class="login">
-        <h2>Login</h2>
+    <div class="signup">
+        <h2>Sign Up</h2>
         
         <!-- Display flash messages -->
         {% with messages = get_flashed_messages(with_categories=true) %}
@@ -19,21 +19,13 @@
             {% endif %}
         {% endwith %}
         
-        <form method="POST" action="{{ url_for('login') }}">
+        <form method="POST" action="{{ url_for('signup') }}">
             <input type="email" id="email" name="email" placeholder="Enter your email" required />
             <br />
-            <input type="password" id="password" name="password" placeholder="Enter your password" required />
+            <input type="password" id="password" name="password" placeholder="Create a password" required />
             <br />
-            <input type="submit" value="Login" />
+            <input type="submit" value="Sign Up" />
         </form>
-
-        <!-- Sign Up Button -->
-        <p>Don't have an account?</p>
-        <a href="{{ url_for('signup') }}">
-            <button type="button">Sign Up</button>
-        </a>
-        
     </div>
 </body>
 </html>
-
