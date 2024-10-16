@@ -1,22 +1,38 @@
 <!-- search.html -->
-<form method="GET" action="{{ url_for('search') }}">
-    <input type="text" id="search_keyword" name="search_keyword" placeholder="Searching for..." />
-    <input type="submit" value="Search" />
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Search Task</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+    <div class="search">
+        <h2>Search</h2>
 
-{% if search_results %}
-    <h3>Search Results for "{{ search_keyword }}":</h3>
-    <ul>
-        {% for todo in search_results %}
-            <li>
-                <a href="{{ url_for('display_todo', todo_id=todo._id) }}">
-                    {{ todo.list_title }}
-                </a>
-            </li>
-        {% endfor %}
-    </ul>
-{% else %}
-    {% if search_keyword %}
-        <p>No tasks found for "{{ search_keyword }}"</p>
-    {% endif %}
-{% endif %}
+        <form method="GET" action="{{ url_for('search') }}">
+            <input type="text" id="search_keyword" name="search_keyword" placeholder="Searching for..." />
+            <input type="submit" value="Search" />
+        </form>
+        
+        {% if search_results %}
+            <h3>Search Results for "{{ search_keyword }}":</h3>
+            <ul>
+                {% for todo in search_results %}
+                    <li>
+                        <a href="{{ url_for('display_todo', todo_id=todo._id) }}">
+                            {{ todo.list_title }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            {% if search_keyword %}
+                <p>No tasks found for "{{ search_keyword }}"</p>
+            {% endif %}
+        {% endif %}
+        
+    </div>
+</body>
+</html>
