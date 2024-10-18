@@ -17,63 +17,68 @@ The To-Do List web application enables users to efficiently organize, manage, an
 
 ## Steps necessary to run the software
 
-1. Install Python
-Make sure Python 3.8 or higher is installed on your system. You can download it from python.org.
+1. **Install Python**:
+   - Make sure Python 3.8 or higher is installed on your system. You can download it from python.org.
 
-2. Clone the Repository
-Download the project by cloning the GitHub repository or downloading the project files manually:
+2. **Clone the repository**:
+   - Run the following commands to create and activate the virtual environment:
+     ```bash
+     git clone https://github.com/software-students-fall2024/2-web-app-straighyt-a.git
+     cd your-repository-folder
+     ```
 
-git clone https://github.com/software-students-fall2024/2-web-app-straighyt-a.git
-cd YOUR_PROJECT_FOLDER
+3. **Set up a Virtual Environment**:
+   - Run the following commands to create and activate the virtual environment:
+     ```bash
+     python3 -m venv venv
+     ```
+   - Activate the virtual environment:
+     - On Windows:
+       ```bash
+       .\venv\Scripts\activate
+       ```
+     - On macOS/Linux:
+       ```bash
+       source venv/bin/activate
+       ```
 
-3. Set up a Virtual Environment
-Run the following commands to create and activate the virtual environment:
+4. **Install Dependencies**:
+   - Use the `requirements.txt` file to install the necessary Python libraries:
+     ```bash
+     pip install -r requirements.txt
+     ```
 
-python3 -m venv venv
-
-Activate the virtual environment:
-
-On Windows:
-.\venv\Scripts\activate
-
-On macOS/Linux:
-source venv/bin/activate
-
-4. Install Dependencies
-Use the requirements.txt file to install the necessary Python libraries:
-
-pip install -r requirements.txt
-
-5. Set up Environment Variables
-Create a .env file in the root directory of your project and add the following variables:
-
-MONGO_DBNAME=todo_db
-MONGO_URI=mongodb+srv://zl3927:PKXFzrHguY8QDwd6@cluster0.tem8w.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
-FLASK_APP=app.py
-FLASK_ENV=development
-Note: Replace <username> and <password> with your MongoDB Atlas credentials.
-
+5. **Set up Environment Variables**:
+   - Create a `.env` file in the root directory of your project and add the following variables:
+     ```env
+     MONGO_DBNAME=todo_db
+     MONGO_URI=mongodb+srv://zl3927:PKXFzrHguY8QDwd6@cluster0.tem8w.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+     FLASK_APP=app.py
+     FLASK_ENV=development
+     FLASK_PORT=3000
+     ```
 
 6. Run MongoDB (if using Docker)
-If you’re running MongoDB locally using Docker, start the MongoDB container:
-
-docker run --name my-mongo -d -p 27017:27017 mongo:latest
+   - If you’re running MongoDB locally using Docker, start the MongoDB container:
+   ```bash
+   docker run --name my-mongo -d -p 27017:27017 mongo:latest
+   ```
 
 7. Run the Flask Application
-In the terminal (with the virtual environment activated), run:
-
-python app.py
+   - In the terminal (with the virtual environment activated), run: 
+   ```bash
+   python app.py
+   ```
 
 8. Access the Application
-Open a web browser and go to:
-
-http://127.0.0.1:5000/
-This will take you to the login page.
+   - Open a web browser and go to `http://127.0.0.1:3000/` 
+   This will take you to the login page.
 
 9. Deactivate the Virtual Environment (Optional)
-When you are finished, deactivate the virtual environment by typing:
-
-deactivate
+   - When finished, deactivate the virtual environment by typing:
+     ```bash
+     deactivate
+     ```
 
 10. Troubleshooting Tips
 If MongoDB is running on Atlas, ensure that the IP address whitelist includes 0.0.0.0/0 or your current IP.
@@ -84,5 +89,5 @@ brew services start mongodb-community  # macOS with Homebrew
 
 ## Task boards
 
-1. Sprint 1 https://github.com/orgs/software-students-fall2024/projects/51/views/1
-2. Sprint 2 https://github.com/orgs/software-students-fall2024/projects/80
+1. **Sprint 1** [Task Boards](https://github.com/orgs/software-students-fall2024/projects/51/views/1)
+2. **Sprint 2** [Task Boards](https://github.com/orgs/software-students-fall2024/projects/80)
