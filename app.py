@@ -1,141 +1,62 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
-from pymongo import MongoClient
-from dotenv import load_dotenv
 import os
+from flask import Flask, render_template, request, redirect, url_for, flash, session
+import pymongo
 from bson.objectid import ObjectId
+from dotenv import load_dotenv
 
-# Load environment variables
-load_dotenv()
+load_dotenv()  # load environment variables from .env file
 
-# Initialize Flask app
-app = Flask(__name__)
-app.secret_key = os.getenv('SECRET_KEY')
+def create_app():
+    """
+    Create and configure the Flask application.
+    returns: app: the Flask application object
+    """
 
-# MongoDB connection
-client = MongoClient(os.getenv('MONGO_URI'))
-db = client.todo_db  # MongoDB database
-todos_collection = db.todos  # MongoDB collection for todos
+    app = Flask(__name__)
 
+    client = pymongo.MongoClient(os.getenv("MONGO_URI"))
+    db = client.todolist
+    users_collection = db.users
+    todos_collection = db.todos
 
-# 1. Login Route
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        email = request.form['email']
-        password = request.form['password']
-        user = db.users.find_one({'email': email, 'password': password})
-        if user:
-            # Successful login
-            flash('Login successful!', 'success')
-            return redirect(url_for('main'))
-        else:
-            # Invalid login attempt
-            flash('Invalid email or password', 'danger')
+    try:
+        client.admin.command("ping")
+        print(" *", "Connected to MongoDB!")
+    except Exception as e:
+        print(" * MongoDB connection error:", e)
+
+    # 1. Signup Route
+    @app.route('/signup', methods=['GET', 'POST'])
+    def signup():
+        if request.method == 'POST':
+            email = request.form['email']
+            password = request.form['password']
+
+            # Check if the user already exists
+            existing_user = users_collection.find_one({'email': email})
+            if existing_user:
+                flash('Email already registered. Please log in.', 'danger')
+                return redirect(url_for('login'))
+
+            # Insert new user
+            users_collection.insert_one({'email': email, 'password': password})
+            flash('Signup successful! Please log in.', 'success')
             return redirect(url_for('login'))
-    return render_template('login.html')
 
+        return render_template('signup.html')
+    # 2. Login Route
+    @app.route('/login', methods=['GET', 'POST'])
+    def login():
+        if request.method == 'POST':
+            email = request.form['email']
+            password = request.form['password']
 
-# 2. Main Page Route
-@app.route('/')
-def main():
-    return render_template('main.html')
+            user = users_collection.find_one({'email': email, 'password': password})
+            if user:
+                session['user_id'] = str(user['_id'])
+                flash('Login successful!', 'success')
+                return redirect(url_for('main'))
+            else:
+                flash('Invalid credentials.', 'danger')
 
-
-# 3. Add New To-Do Task Route
-@app.route('/add_new', methods=['GET', 'POST'])
-def add_new():
-    if request.method == 'POST':
-        list_title = request.form['list_title']
-        time = request.form['time']
-        todo_content = request.form['todo_content']
-        status = request.form['status']
-        
-        todos_collection.insert_one({
-            'list_title': list_title,
-            'time': time,
-            'todo_content': todo_content,
-            'status': status
-        })
-        flash('New to-do task created successfully!')
-        return redirect(url_for('main'))
-    
-    return render_template('add.html')
-
-
-# 4. Display a Single To-Do Task Route
-@app.route('/task/<todo_id>')
-def display_todo(todo_id):
-    todo = todos_collection.find_one({'_id': ObjectId(todo_id)})
-    return render_template('display.html', todo=todo)
-
-
-# 5. Edit an Existing To-Do Task Route
-@app.route('/edit/<todo_id>', methods=['GET', 'POST'])
-def edit_todo(todo_id):
-    todo = todos_collection.find_one({'_id': ObjectId(todo_id)})
-
-    if request.method == 'POST':
-        list_title = request.form['list_title']
-        time = request.form['time']
-        todo_content = request.form['todo_content']
-        status = request.form['status']
-
-        todos_collection.update_one(
-            {'_id': ObjectId(todo_id)},
-            {'$set': {
-                'list_title': list_title,
-                'time': time,
-                'todo_content': todo_content,
-                'status': status
-            }}
-        )
-        flash('Task updated successfully!')
-        return redirect(url_for('main'))
-
-    return render_template('edit.html', todo=todo)
-
-
-# 6. Delete To-Do Task Route
-@app.route('/delete/<todo_id>', methods=['GET', 'POST'])
-def delete_todo(todo_id):
-    todos_collection.delete_one({'_id': ObjectId(todo_id)})
-    flash('Task deleted successfully!')
-    return redirect(url_for('main'))
-
-
-# 7. Search for a To-Do Task Route
-@app.route('/search', methods=['GET'])
-def search():
-    search_keyword = request.args.get('search_keyword')
-    if search_keyword:
-        search_results = todos_collection.find({'list_title': {'$regex': search_keyword, '$options': 'i'}})
-        return render_template('search.html', search_results=search_results, search_keyword=search_keyword)
-    return render_template('search.html', search_results=[])
-
-
-# 8. View All Tasks Route with Filtering
-@app.route('/view_all', methods=['GET', 'POST'])
-def view_all():
-    filter_status = request.form.get('filter', 'all')
-    if filter_status == 'all':
-        todos = todos_collection.find()
-    else:
-        todos = todos_collection.find({'status': filter_status})
-
-    return render_template('view_all.html', todos=todos)
-
-#9. Display To dos 
-@app.route('/task/<todo_id>')
-def display_todo(todo_id):
-    # Make sure you use ObjectId to query based on the MongoDB _id field
-    todo = todos_collection.find_one({'_id': ObjectId(todo_id)})
-    if todo:
-        return render_template('display.html', todo=todo)
-    else:
-        flash('Task not found.', 'danger')
-        return redirect(url_for('view_all'))
-
-
-
-if __name__ == '__main__':
-    app.run(debug=True)
+        return render_template('login.html')
