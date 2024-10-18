@@ -60,3 +60,84 @@ def create_app():
                 flash('Invalid credentials.', 'danger')
 
         return render_template('login.html')
+    # 3. Main Page Route
+    @app.route('/')
+    def main():
+        if 'user_id' not in session:
+            return redirect(url_for('login'))
+        return render_template('main.html')
+    
+    # 4. Add New To-Do Task Route
+    @app.route('/add_new', methods=['GET', 'POST'])
+    def add_new():
+        if 'user_id' not in session:
+            return redirect(url_for('login'))
+
+        if request.method == 'POST':
+            task = {
+                'user_id': session['user_id'],
+                'list_title': request.form['list_title'],
+                'time': request.form['time'],
+                'todo_content': request.form['todo_content'],
+                'status': request.form['status']
+            }
+            todos_collection.insert_one(task)
+            flash('New task added!', 'success')
+            return redirect(url_for('view_all'))
+
+        return render_template('add.html')
+    
+    # 5. View All Tasks for Logged-in User
+    @app.route('/view_all', methods=['GET'])
+    def view_all():
+        if 'user_id' not in session:
+            return redirect(url_for('login'))
+
+        user_id = session['user_id']
+        todos = todos_collection.find({'user_id': user_id})
+        return render_template('view_all.html', todos=todos)
+    
+    # 6. Display a Single Task Route
+    @app.route('/task/<todo_id>')
+    def display_todo(todo_id):
+        if 'user_id' not in session:
+            return redirect(url_for('login'))
+
+        todo = todos_collection.find_one({'_id': ObjectId(todo_id)})
+        return render_template('display.html', todo=todo)
+    
+    # 7. Edit Task Route
+    @app.route('/edit/<todo_id>', methods=['GET', 'POST'])
+    def edit_todo(todo_id):
+        if 'user_id' not in session:
+            return redirect(url_for('login'))
+
+        todo = todos_collection.find_one({'_id': ObjectId(todo_id)})
+
+        if request.method == 'POST':
+            updated_task = {
+                'list_title': request.form['list_title'],
+                'time': request.form['time'],
+                'todo_content': request.form['todo_content'],
+                'status': request.form['status']
+            }
+            todos_collection.update_one({'_id': ObjectId(todo_id)}, {'$set': updated_task})
+            flash('Task updated!', 'success')
+            return redirect(url_for('view_all'))
+
+    return render_template('edit.html', todo=todo)
+
+    # 8. Delete Task Route
+    @app.route('/delete/<todo_id>', methods=['POST'])
+    def delete_todo(todo_id):
+        if 'user_id' not in session:
+            return redirect(url_for('login'))
+
+        todos_collection.delete_one({'_id': ObjectId(todo_id)})
+        flash('Task deleted!', 'info')
+        return redirect(url_for('view_all'))
+    
+    
+    if __name__ == '__main__':
+        app.run(debug=True)
+
