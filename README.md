@@ -64,7 +64,16 @@ The To-Do List web application enables users to efficiently organize, manage, an
    ```bash
    docker run --name my-mongo -d -p 27017:27017 mongo:latest
    ```
-
+   - If any container has name conflicts (my-mongo):
+      - stop the old containter by:
+      ```bash
+      docker stop my-mongo
+      ```
+      - After stopping, remove it with:
+      ```bash
+      docker rm my-mongo
+      ```
+      - Then start the MongoDB container.
 7. Run the Flask Application
    - In the terminal (with the virtual environment activated), run: 
    ```bash
