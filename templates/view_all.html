@@ -18,10 +18,10 @@
             <form method="POST" action="{{ url_for('view_all') }}">
                 <label for="filter">Filter:</label>
                 <select id="filter" name="filter">
-                    <option value="to_do">To-Do</option>
-                    <option value="in_progress">In Progress</option>
-                    <option value="done">Done</option>
-                    <option value="all">All</option>
+                    <option value="to_do" {% if filter_value == 'to_do' %}selected{% endif %}>To-Do</option>
+                    <option value="in_progress" {% if filter_value == 'in_progress' %}selected{% endif %}>In Progress</option>
+                    <option value="done" {% if filter_value == 'done' %}selected{% endif %}>Done</option>
+                    <option value="all" {% if filter_value == 'all' %}selected{% endif %}>All</option>
                 </select>
                 <input type="submit" value="Apply Filter" />
             </form>

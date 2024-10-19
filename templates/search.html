@@ -10,6 +10,9 @@
 <body>
     <div class="search">
         <h2>Search</h2>
+        <header>
+            <a href="{{ url_for('main') }}">Home</a>
+        </header>
 
         <form method="GET" action="{{ url_for('search') }}">
             <input type="text" id="search_keyword" name="search_keyword" placeholder="Searching for..." />

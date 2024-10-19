@@ -4,6 +4,10 @@ import pymongo
 from bson.objectid import ObjectId
 from dotenv import load_dotenv
 
+#import ssl
+#print(ssl.OPENSSL_VERSION)
+
+
 load_dotenv()  # load environment variables from .env file
 
 def create_app():
@@ -13,6 +17,7 @@ def create_app():
     """
 
     app = Flask(__name__)
+    app.secret_key = os.getenv('SECRET_KEY') or 'default_secret_key'
 
     client = pymongo.MongoClient(os.getenv("MONGO_URI"))
     db = client.todolist
@@ -88,14 +93,30 @@ def create_app():
         return render_template('add.html')
     
     # 5. View All Tasks for Logged-in User
-    @app.route('/view_all', methods=['GET'])
+    @app.route('/view_all', methods=['GET','POST'])
     def view_all():
         if 'user_id' not in session:
             return redirect(url_for('login'))
 
         user_id = session['user_id']
-        todos = todos_collection.find({'user_id': user_id})
-        return render_template('view_all.html', todos=todos)
+        filter_value = 'all' #default
+
+        if request.method == 'POST':
+            filter_value = request.form.get('filter')
+
+            if filter_value == 'to_do':
+                todos = todos_collection.find({'user_id': user_id, 'status': 'to_do'})
+            elif filter_value == 'in_progress':
+                todos = todos_collection.find({'user_id': user_id, 'status': 'in_progress'})
+            elif filter_value == 'done':
+                todos = todos_collection.find({'user_id': user_id, 'status': 'done'})
+            else:
+                todos = todos_collection.find({'user_id': user_id})
+        #default display
+        else:
+            todos = todos_collection.find({'user_id': user_id})
+
+        return render_template('view_all.html', todos=todos, filter_value=filter_value)
     
     # 6. Display a Single Task Route
     @app.route('/task/<todo_id>')
@@ -114,6 +135,10 @@ def create_app():
 
         todo = todos_collection.find_one({'_id': ObjectId(todo_id)})
 
+        if not todo:
+            flash('Task not found!', 'danger')
+            return redirect(url_for('view_all'))
+
         if request.method == 'POST':
             updated_task = {
                 'list_title': request.form['list_title'],
@@ -125,7 +150,7 @@ def create_app():
             flash('Task updated!', 'success')
             return redirect(url_for('view_all'))
 
-    return render_template('edit.html', todo=todo)
+        return render_template('edit.html', todo=todo)
 
     # 8. Delete Task Route
     @app.route('/delete/<todo_id>', methods=['POST'])
@@ -133,11 +158,38 @@ def create_app():
         if 'user_id' not in session:
             return redirect(url_for('login'))
 
-        todos_collection.delete_one({'_id': ObjectId(todo_id)})
+        todos_collection.delete_one({'_id': ObjectId(todo_id), 'user_id': session['user_id']})
         flash('Task deleted!', 'info')
         return redirect(url_for('view_all'))
-    
+
+    # 9. Search Task Route
+    @app.route('/search', methods=['GET', 'POST'])
+    def search():
+        if 'user_id' not in session:
+            return redirect(url_for('login'))
+
+        search_keyword = request.args.get('search_keyword', '')
+
+        if search_keyword:
+            search_results = todos_collection.find({
+                'user_id': session['user_id'],
+                'list_title': {'$regex': search_keyword, '$options': 'i'}
+            })
+        else:
+            search_results = []
+
+        return render_template('search.html', search_results=search_results, search_keyword=search_keyword)
+
+    # 10. Logout
+    @app.route('/logout')
+    def logout():
+        # Clear the user session
+        session.clear()
+        flash('You have been logged out.', 'info')
+        return redirect(url_for('login'))
     
     if __name__ == '__main__':
-        app.run(debug=True)
-
+        app = create_app()
+        app.run(debug=True,port=3000)
+        
+    return app
