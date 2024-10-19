@@ -52,7 +52,8 @@ The To-Do List web application enables users to efficiently organize, manage, an
    - Create a `.env` file in the root directory of your project and add the following variables:
      ```env
      MONGO_DBNAME=todo_db
-     MONGO_URI=mongodb+srv://zl3927:PKXFzrHguY8QDwd6@cluster0.tem8w.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+     MONGO_URI=mongodb://localhost:27017/todo_db
+     #MONGO_URI=mongodb+srv://zl3927:PKXFzrHguY8QDwd6@cluster0.tem8w.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
      FLASK_APP=app.py
      FLASK_ENV=development
      FLASK_PORT=3000
@@ -68,6 +69,10 @@ The To-Do List web application enables users to efficiently organize, manage, an
    - In the terminal (with the virtual environment activated), run: 
    ```bash
    python app.py
+   ```
+   - or using Flask if above command not working:
+    ```bash
+   flask run --port=3000
    ```
 
 8. Access the Application
