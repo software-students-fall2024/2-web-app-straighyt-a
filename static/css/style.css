@@ -3,35 +3,48 @@ body {
     line-height: 1.6;
     margin: 0;
     padding: 0;
-    background-color: #ffffff;
+    background-color: #fff8f5;
     color: #333333;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;;
     min-height: 100vh;
+    width: 100%; 
+    box-sizing: border-box;
+    overflow-x: hidden;
 }
 
-.container, .signup {
-    max-width: 800px;
-    width: 100%;
-    margin: 40px auto;
-    padding: 30px;
+body,.login, .signup, .container,.search,.display,.view_all,.edit  {
+    max-width: 400px; 
+    margin: 0 auto; 
+    padding: 20px;
     background-color: #FEF9FF;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(115, 108, 237, 0.1);
+    text-align: center; 
+}
+
+header img {
+    max-width: 100px; 
+    height: auto;
+    display: block;
+    margin: 0 auto 30px; 
+    cursor: pointer; 
 }
 
 .signup {
-    max-width: 400px;
+    max-width: 350px;
 }
 
 /* Header Styles */
 header {
     margin-bottom: 30px;
+    margin-top: 30px;
+    text-align: center;
 }
 
 header a {
-    color: #9F9FED; 
+    color: #786a6a; 
     text-decoration: none;
     font-weight: 500;
     font-size: 18px;
@@ -39,45 +52,54 @@ header a {
 }
 
 header a:hover {
-    color: #736CED;
+    color: #3B2929;
 }
 
 nav {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column; 
+    align-items: center; 
+    gap: 30px; 
     margin-bottom: 30px;
-    flex-wrap: wrap;
 }
 
 nav a {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #a682ff;
-    color: #FEF9FF; 
+    width: 100%; 
+    max-width: 350px; 
+    padding: 12px 16px;
+    background-color: #786a6a;
+    color: #FEF9FF;
     text-decoration: none;
-    border-radius: 4px;
+    border-radius: 5px;
     transition: background-color 0.3s ease, transform 0.1s ease;
     font-weight: 500;
     text-align: center;
-    min-width: 120px; 
-    margin: 5px;
 }
 
 nav a:hover {
-    background-color: #736CED;
-    transform: translateY(-2px); 
+    background-color: #482e2e;
+    transform: translateY(-2px);
 }
 
+
 h1, h2 {
-    color: #736CED;
+    color: #482e2e;
+    margin:0;
     margin-bottom: 20px;
     text-align: center;
+    cursor:pointer;
+}
+
+h2 {
+    font-size: 32px; 
 }
 
 /* Form Styles */
 form {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    width: 100%;
 }
 
 input[type="text"],
@@ -88,8 +110,9 @@ textarea,
 select {
     width: 100%;
     padding: 12px;
+    max-width: 350px;
     margin-bottom: 20px;
-    border: 1px solid #D4C1EC; 
+    border: 1px solid #786a6a; 
     border-radius: 4px;
     font-size: 16px;
     transition: border-color 0.3s ease;
@@ -102,7 +125,7 @@ input[type="password"]:focus,
 input[type="datetime-local"]:focus,
 textarea:focus,
 select:focus {
-    border-color: #9F9FED;  
+    border-color: #786a6a;  
     outline: none;
 }
 
@@ -116,89 +139,137 @@ input[type="submit"],
 input[type="button"],
 button {
     padding: 12px 20px;
+    width: 80%;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
     transition: background-color 0.3s ease;
-    color: #FEF9FF;  
+    color: #FEF9FF; 
+    margin: 0;
+    text-align: center;
+    line-height: normal; 
 }
 
 input[type="submit"],
 button[type="submit"] {
-    background-color: #736CED;
+    background-color: #482e2e;
 }
 
 input[type="submit"]:hover,
 button[type="submit"]:hover {
-    background-color: #858ae3; 
+    background-color: #4d3e3e; 
 }
 
 input[type="button"],
 button[type="button"] {
-    background-color: #9F9FED;  
-    color: #333333;
+    background-color: #482e2e;  
+    color: #FEF9FF;
 }
 
 input[type="button"]:hover,
 button[type="button"]:hover {
-    background-color: #9F9FED;  
+    background-color: #786a6a;  
     color: #FEF9FF;
 }
 
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    gap: 10px; 
+    margin-top: 20px; 
+}
+
+input[type="submit"], input[type="button"] {
+    width: auto; 
+    padding: 10px 20px;
+    background-color: #574949;
+    color: #FEF9FF;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center; 
+    line-height: normal; 
+    margin: 0;
+}
+
 /* Task List Styles */
-.task-list {
-    list-style-type: none;
-    padding: 0;
+
+.task-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    width: 100%; 
+    box-sizing: border-box;
 }
 
-.task-item {
-    background-color: #FEF9FF;
-    border: 1px solid #D4C1EC; 
-    border-radius: 4px;
-    padding: 15px;
-    margin-bottom: 15px;
-    transition: box-shadow 0.3s ease;
-}
-
-.task-item:hover {
-    box-shadow: 0 2px 4px rgba(115, 108, 237, 0.1);
-}
-
-.task-title {
-    font-weight: bold;
-    color: #736CED; 
-    margin-bottom: 5px;
-}
-
-.task-time {
-    font-size: 14px;
-    color: #9F9FED;  
+.task-box {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
     margin-bottom: 10px;
+    border-radius: 5px; 
+    font-weight: bold;
+    text-align: center;
+    width: 100%; 
+    max-width: 350px; 
+    margin: 0 auto 15px; 
+    color: #FEF9FF; 
 }
 
-.task-status {
-    display: inline-block;
-    padding: 3px 8px;
-    border-radius: 3px;
-    font-size: 12px;
+.task-box a {
+    color: #FEF9FF; 
+    font-size: 22px; 
+    text-decoration: none; 
     font-weight: bold;
-    text-transform: uppercase;
+    text-align: center; 
+    width: 100%;
 }
 
 .status-todo {
-    background-color: #F2DFD7;  
-    color: #736CED;  
+    background-color: #F36541;  
+    color: #FEF9FF;  
 }
 
 .status-in-progress {
-    background-color: #D4C1EC;  
+    background-color: #FEC463;  
     color: #FEF9FF;  
 }
 
 .status-done {
-    background-color: #736CED;  
+    background-color: #A4CF63;  
     color: #FEF9FF;  
+}
+
+ul {
+    padding: 0;
+    list-style-type: none;
+    flex-direction: column;
+    align-items: center; 
+    width: 100%;
+}
+
+
+/* Display page*/
+.display {
+    text-align: left; 
+    font-size: 18px; 
+    margin-top: 20px; 
+}
+
+.display p {
+    font-size: 18px; 
+    margin-bottom: 10px; 
+}
+
+.display .time,
+.display .status,
+.display .content {
+    display: block;
+    margin-bottom: 10px; 
+    font-size: 18px; 
 }
 
 /* Alert Styles */
@@ -222,7 +293,7 @@ button[type="button"]:hover {
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
+@media (max-width: 600px) {
     .container, .signup {
         width: 95%;
         margin: 20px auto;
@@ -234,7 +305,7 @@ button[type="button"]:hover {
     }
     
     nav a {
-        width: 100%;
-        margin-bottom: 10px;
+        padding: 12px 16px;
+        font-size: 16px;
     }
 }

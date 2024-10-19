@@ -10,7 +10,9 @@
     <body>
         <div class="display">
             <header>
-                <a href="{{ url_for('main') }}">Home</a>
+                <a href="{{ url_for('main') }}">
+                    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
+                </a>
             </header>
         
             <h2>{{ todo.list_title }}</h2>
@@ -24,10 +26,13 @@
                     window.location.href = editUrl;
                 }
             </script>
-            <input type="button" value="Edit" onclick="redirectToEdit('{{ todo._id }}')" />
-            <form action="{{ url_for('delete_todo', todo_id=todo._id) }}" method="POST" style="display:inline;">
-                <input type="submit" value="Delete" />
-            </form>
+
+            <div class="button-container">
+                <input type="button" value="Edit" onclick="redirectToEdit('{{ todo._id }}')" />
+                <form action="{{ url_for('delete_todo', todo_id=todo._id) }}" method="POST" style="display:inline;">
+                    <input type="submit" value="Delete" />
+                </form>
+            </div>
             
             
         </div>

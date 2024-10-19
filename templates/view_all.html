@@ -8,35 +8,40 @@
     </head>
 
     <body>
-        <div class="view all">
+        <div class="view_all">
             <header>
-                <a href="{{ url_for('main') }}">Home</a>
+                <a href="{{ url_for('main') }}">
+                    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
+                </a>
             </header>
 
             <h2>Check All Tasks</h2>
-            <!-- Updated the form action to point to 'view_all' -->
-            <form method="POST" action="{{ url_for('view_all') }}">
-                <label for="filter">Filter:</label>
-                <select id="filter" name="filter">
-                    <option value="to_do" {% if filter_value == 'to_do' %}selected{% endif %}>To-Do</option>
-                    <option value="in_progress" {% if filter_value == 'in_progress' %}selected{% endif %}>In Progress</option>
-                    <option value="done" {% if filter_value == 'done' %}selected{% endif %}>Done</option>
-                    <option value="all" {% if filter_value == 'all' %}selected{% endif %}>All</option>
-                </select>
-                <input type="submit" value="Apply Filter" />
-            </form>
 
-            <ul>
-                {% for todo in todos %}
-                    <li>
-                        <a href="{{ url_for('display_todo', todo_id=todo._id) }}">
-                            {{ todo.list_title }}
-                        </a>
-                    </li>
-                {% else %}
-                    <li>No to-do items found</li>
-                {% endfor %}
-            </ul>
+            <div class="task-container">
+            <!-- Updated the form action to point to 'view_all' -->
+                <form method="POST" action="{{ url_for('view_all') }}">
+                    <label for="filter">Filter:</label>
+                    <select id="filter" name="filter">
+                        <option value="to_do" {% if filter_value == 'to_do' %}selected{% endif %}>To-Do</option>
+                        <option value="in_progress" {% if filter_value == 'in_progress' %}selected{% endif %}>In Progress</option>
+                        <option value="done" {% if filter_value == 'done' %}selected{% endif %}>Done</option>
+                        <option value="all" {% if filter_value == 'all' %}selected{% endif %}>All</option>
+                    </select>
+                    <input type="submit" value="Apply Filter" />
+                </form>
+
+                <ul>
+                    {% for todo in todos %}
+                        <li class="task-box {% if todo.status == 'to_do' %}status-todo{% elif todo.status == 'in_progress' %}status-in-progress{% elif todo.status == 'done' %}status-done{% endif %}">
+                            <a href="{{ url_for('display_todo', todo_id=todo._id) }}">
+                                {{ todo.list_title }}
+                            </a>
+                        </li>
+                    {% else %}
+                        <li>No to-do items found</li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
     </body>
 </html>

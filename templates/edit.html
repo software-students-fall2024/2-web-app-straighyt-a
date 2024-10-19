@@ -10,7 +10,9 @@
     <body>
         <div class="edit">
             <header>
-                <a href="{{ url_for('main') }}">Home</a>
+                <a href="{{ url_for('main') }}">
+                    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
+                </a>
             </header>
 
             <h2>Edit Task</h2>
@@ -37,9 +39,10 @@
                     }
                 </script>
 
-                <input type="submit" value="Save Changes" />
-                <input type="button" value="Cancel" onclick="redirectToMain()" />
-
+                <div class="button-container">
+                    <input type="submit" value="Save Changes" />
+                    <input type="button" value="Cancel" onclick="redirectToMain()" />
+                </div>
             </form>
         </div>
     </body>

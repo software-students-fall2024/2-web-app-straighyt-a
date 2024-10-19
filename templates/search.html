@@ -9,10 +9,14 @@
 </head>
 <body>
     <div class="search">
-        <h2>Search</h2>
+        
         <header>
-            <a href="{{ url_for('main') }}">Home</a>
+            <a href="{{ url_for('main') }}">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
+            </a>
         </header>
+
+        <h2>Search</h2>
 
         <form method="GET" action="{{ url_for('search') }}">
             <input type="text" id="search_keyword" name="search_keyword" placeholder="Searching for..." />
@@ -23,7 +27,7 @@
             <h3>Search Results for "{{ search_keyword }}":</h3>
             <ul>
                 {% for todo in search_results %}
-                    <li>
+                    <li class="task-box {% if todo.status == 'to_do' %}status-todo{% elif todo.status == 'in_progress' %}status-in-progress{% elif todo.status == 'done' %}status-done{% endif %}">
                         <a href="{{ url_for('display_todo', todo_id=todo._id) }}">
                             {{ todo.list_title }}
                         </a>
